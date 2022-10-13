@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ShoppingList>
+	<meat>
+		<product>
+			<name>ham</name>
+			<quantity unit="kg" cena="10">0.5</quantity>
+		</product>
+	</meat>
+	<vegetables>
+		<product>
+			<name>green beans</name>
+			<quantity unit="kg" cena="2">1</quantity>
+		</product>
+		<product>
+			<name>potatoes</name>
+			<quantity unit="kg" cena="1">2</quantity>
+		</product>	
+	</vegetables>
+	<dairy>
+		<product>
+			<name>cheese</name>
+			<quantity unit="kg" cena="1.5">0.2</quantity>
+		</product>
+		<product>
+			<name>eggs</name>
+			<quantity unit="pcs" cena="0.5">10</quantity>
+		</product>
+	</dairy>
+	<beverages>
+		<product>
+			<name>coke</name>
+			<quantity unit="l" cena="3">1</quantity>
+		</product>
+		<product>
+			<name>wine</name>
+			<quantity unit="l" cena="15">0.2</quantity>
+		</product>
+		<product>
+			<name>orange juice</name>
+			<quantity unit="l" cena="2">0.2</quantity>
+		</product>
+	</beverages>
+</ShoppingList>

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<contacts>
+	<!-- pay attention to the international characters:
+	  1/ use the "encoding" attribute with "utf-8" value
+	  2/ save an xml file in utf-8 format
+	-->
+	<contact>
+		<company>Intersoft Ltd.</company>
+		<email>office@intersoft.pl</email>
+		<phone>3334528</phone>
+		<phone>3334529</phone>
+		<url>http://www.intersoft.pl</url>
+		<address>ul.Dębowa 5, Łódź></address>
+	</contact>
+	<contact>
+		<name>Anna</name>
+		<name>Maria</name>
+		<surname>Kowalska</surname>
+		<email type="personal">akowalska@gmail.com</email>
+		<email type="business">Anna.Kowalska@CompLand.pl</email>
+		<phone type="home">5552307</phone>
+		<phone type="work">6660611</phone>
+		<notes>my best friend</notes>
+	</contact>
+	<contact>
+		<name>Kacper</name>
+		<name>Jan</name>
+		<surname>Kowalski</surname>
+		<email type="personal">mail@personal.com</email>
+		<email type="business">mail@business.com</email>
+		<phone type="home">5559987</phone>
+		<phone type="work">5551212</phone>
+		<notes>put your notes here</notes>
+	</contact>
+</contacts>
