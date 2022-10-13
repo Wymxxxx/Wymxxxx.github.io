@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+   <meta name="GENERATOR" content="Arachnophilia 3.9">
+   <meta name="description" content="Describes what happens when a PC is turned on.">
+   <meta name="keywords" content="pc,pc booting,booting,power supply,rom bios,booting process,post,power on self test">
+   <title>The Booting Process of the PC</title>
+<link href="abmodems/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="center"><a href="index.html" target="_top">Hardware Section Page</a></div>
+<br>
+
+<!--Begin Google ad code -->
+<DIV style="TEXT-ALIGN: center">
+<script type="text/javascript"><!--
+google_ad_client = "pub-0057014352875780";
+/* 728x90, created 3/24/10 */
+google_ad_slot = "3225609403";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></DIV>
+<!--End Google ad code -->
+
+<h1>The Booting Process of the PC</h1>
+<h2>Version 1.00 January 23, 2002</h2>
+<p>
+The process begins when the power supply is switched on:
+</p>
+<ol>
+<li><b>The power supply performs a self-test:</b>
+<ul>
+<li>When all voltages and current levels are acceptable (+5v, +3.0 through +6.0 is generally considered acceptable), the supply indicates that the power is stable and sends the "Power Good" signal  to the motherboard.
+<li>The "Power Good" signal is received by the microprocessor timer chip, which controls the reset line to the microprocessor.  The time between turning on the switch to the generation of the "Power Good" signal is usually between 0.1 and 0.5 seconds.
+<li>In the absence of the "Power Good" signal, the timer chip continuously resets the microprocessor, which prevents the system from running under bad or unstable power conditions.
+</ul><br>
+
+<li><b>The microprocessor timer chip receives the "Power Good" signal:</b>
+<ul>
+<li>After the power supply is switched on, the microprocessor timer chip generates a reset signal to the processor (the same as if you held the reset button down for a while on your case) until it receives the "Power Good" signal from the power supply.  
+<li>After the reset signal turns off, the CPU begins to operate.  Code in RAM cannot be executed since the RAM is empty.  The CPU manufacturers pre-program the processor to always begin executing code at address "FFFF:0000" (usually the ROM BIOS) of the ROM.
+</ul><br>
+ 
+
+<li><b>The CPU starts executing the ROM BIOS code:</b>
+<ul> 
+<li>The CPU loads and executes the ROM BIOS code starting at ROM memory address "FFFF:0000" which is only 16 bytes from the top of ROM memory.  As such, it contains only a JMP (jump) instruction that points to the actual address of the ROM BIOS code. 
+</ul><br>
+
+<li><b>The BIOS searches for adapters (usually video adapters) that may need to load their own ROM BIOS routines:</b>
+<ul>
+<li>Video adapters provide the most common source of adapter ROM BIOS.  The start-up BIOS routines scan memory addresses "C000:0000" through "C780:0000" to find video ROM.
+<li>An error loading any adapter ROM generates an error such as:"XXXX ROM Error" where XXXX represents the segment address of the failed module.
+</ul><br>
+
+<li><b>The ROM BIOS checks to see if this is a 'cold boot' or a 'warm boot':</b>
+<p>
+To determine whether this is a "cold boot" or a "warm boot" the ROM BIOS startup routines check the value of the two bytes located at memory location "0000:0472". 
+</p>
+<ul>
+<li>Warm boot - A word value of 1234h in this location is a flag that indicates a "warm boot", which causes the memory test portion of the POST (Power-On Self-Test) to be skipped.
+<li>Cold boot - Any other word value in this location indicates a "cold boot" and full POST.
+</ul>
+<br>
+
+<li><b>POST (Power-On Self-Test):</b>
+<p>
+The POST is a series of diagnostic tests that run automatically when you turn your computer on.  The actual tests can differ depending on how the BIOS is configured, but usually the POST tests the following: 
+</p>
+<ul type="A">
+<li>The Video adapter - It is initialized, the video card and video memory is tested, and configuration information or any errors are displayed.
+<li>The RAM - A read/write test of each memory address is performed and a running sum of installed memory is displayed.
+<li>The keyboard - PS/2 ports or USB ports are checked to verify whether the keyboard is connected or not.
+<li>The Processor - The cache memory is checked and the CPU type and speed are displayed.
+<li>CMOS - Read/write test.
+<li>ROM BIOS checksum.
+<li>RAM refresh verification.
+</ul>  
+<p>
+-Note:"The POST operations are not the same for the all BIOS software"
+</p>
+<p>
+Any errors found during the POST are reported by a combination of beeps and displayed error messages.  The errors which  occur during the POST can be classified as either 'fatal' or 'non-fatal'.  A non-fatal error (e.g. problem in the extended memory) will typically display an error message on the screen and allow the system to continue the boot process.  A fatal error (e.g. problem in the processor), on the other hand, stops the process of booting the computer and is generally signaled by a series of beep-codes.  However, successful completion of the POST is indicated by a single beep.
+</p>
+
+
+<li><b>The BIOS locates and reads the configuration information stored in CMOS:</b>
+<p>
+CMOS (Complementary Metal-Oxide Semiconductor) is a small area of memory (64 bytes) which is maintained by the current of a small battery attached to the motherboard.  Most importantly, for the ROM BIOS startup routines (boot sequence), CMOS determines the order in which drives should be examined for an operating system (floppy disk first, CD-Rom first, or fixed disk first). Furthermore, it holds some essential information such as hard drive size, memory address location, and Date & Time.
+</p>
+
+
+<li><b>Shadow RAM: (Optional, you can turn it off/on using the CMOS settings)</b>
+<p>
+Shadow RAM is where a copy of BIOS routines from ROM is stored a special area of RAM, so that the BIOS routines can be accessed more quickly.
+</p>
+
+
+<li><b>Loading the OS (Operating System):</b>
+<p>
+The BIOS will attempt booting using the boot sequence determined by the CMOS settings, and examine the MBR (Master Boot Record) of the bootable disk.<br>
+The MBR is the information in the first sector (512 bytes) of any hard disk or diskette that identifies how and where an operating system is located so that it can be loaded into the RAM (booted).
+</pl>
+<p>
+The MBR is also sometimes called the "partition sector" or the "master partition table" because it includes a table that locates each partition that the hard disk has been formatted into.  In addition to this table, the MBR also includes a program that reads the boot sector record of the partition containing the operating system to be booted into RAM.   In turn, that record contains a program that loads the rest of the operating system into RAM. 
+</p>
+</ol>
+
+<h4>By: S. Ebrahim Shubbar</h4>
+
+<h5>References:</h5>
+<ul>
+<li><a href="http://whatis.techtarget.com/definition/0,,sid9_gci214577,00.html" target="_blank">http://whatis.techtarget.com/definition/0,,sid9_gci214577,00.html</a>
+<li><a href="http://www.qvctc.commnet.edu/classes/csc277/boot.html#Top" target="_blank">http://www.qvctc.commnet.edu/classes/csc277/boot.html#Top</a>
+<li><a href="http://www.webopedia.com/TERM/P/POST2.html" target="_blank">http://www.webopedia.com/TERM/P/POST2.html</a>
+<li><a href="http://www.crackinguniversity2000.it/boooks/0789712954/ch22/ch22.htm" target="_blank">http://www.crackinguniversity2000.it/boooks/0789712954/ch22/ch22.htm</a>
+<li><a href="http://www.howstuffworks.com/bios1.htm" target="_blank">http://www.howstuffworks.com/bios1.htm</a>
+<li><a href="http://www.pcguide.com/ref/mbsys/bios/bootPOST-c.html" target="_blank">http://www.pcguide.com/ref/mbsys/bios/bootPOST-c.html</a>
+<li><a href="http://www.crackinguniversity2000.it/boooks/0789712954/ch08/ch08.htm" target="_blank">http://www.crackinguniversity2000.it/boooks/0789712954/ch08/ch08.htm</a>
+<li><a href="http://www.computercraft.com/docs/beeps.html" target="_blank">http://www.computercraft.com/docs/beeps.html</a>
+<li><a href="http://www.howstuffworks.com/pc3.htm" target="_blank">http://www.howstuffworks.com/pc3.htm</a>
+<li><a href="http://www.webopedia.com/TERM/C/CMOS.html" target="_blank">http://www.webopedia.com/TERM/C/CMOS.htm</a>
+<li><a href="http://www.cr-il.com/glossary.htm" target="_blank">http://www.cr-il.com/glossary.htm</a>
+<li><a href="http://searchstorage.techtarget.com/sDefinition/0,,sid5_gci212975,00.html" target="_blank">http://searchstorage.techtarget.com/sDefinition/0,,sid5_gci212975,00.html</a>
+</ul>
+<h5>A downloadable text copy of this document:</h5>
+<p>
+<a href="EssayI.txt" target="_blank">EssayI.txt</a>
+</p>
+<div class="center"><a href="index.html" target="_top">Hardware Section Page</a></div>
+
+</body>
+</html>

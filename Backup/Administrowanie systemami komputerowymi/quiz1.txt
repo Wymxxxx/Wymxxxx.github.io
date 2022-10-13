@@ -1,0 +1,41 @@
+Zapisane z Moodla
+
+Do protokołów wewnętrznych wektora odległości należą:
+b. OSPF, RIP
+
+Do parametrów, które może uwzględniać metryka należy:
+a. przepustowość łączy
+*b. obie odpowiedzi są prawidłowe
+c. aktualne obciążenie łącza
+
+Routing statyczny jest:
+c. przewidywalny ? trasa, po której pakiet jest przysyłany jest dobrze znana i moze byc kontrolowana
+
+Protokół OSPF to:
+a. protokół routingu dynamicznego
+
+Maksymalny rozmiar przesyłanych wiadomosci BGP to:
+a. 4096 oktetów
+
+IGRP działa na podstawie:
+a. algorytmu wektora odległosci
+
+W celu wyznaczenia trasy metodą wektora odległości wykorzystujemy:
+a. algorytm Bellmana-Forda
+
+Do protokołów zewnętrznych wektora odległości należą:
+b. EGP, BGP
+
+Protokoły wektora odległości przechowują w swoich tablicach tylko te trasy które posiadają:
+c. najmniejszą metrykę
+
+Do protokołów routingu zaliczamy protokół:
+c. IGRP
+
+Bieżące implementacje protokołów wektora odległości przechowują w tablicach routingu następujące informacje:
+a. interfejs
+b. adres IP sieci lub stacji docelowej
+*c. obie odpowiedzi są prawidłowe
+
+Przecietnie ruter wysyła informacje co 30 sekund do wszystkich swoich sasiadów. Informacje te nazywamy:
+a. pakiety typu broadcast
