@@ -1,0 +1,31 @@
+SELECT imie, nazwisko FROM pracownicy ;
+
+SELECT Produkt,  Nazwisko FROM  Klienci INNER JOIN Sprzedaz ON Klienci.Id_Klienta = Zamowienia.Id_Klienta;
+
+SELECT id_pracownika, nazwisko FROM pracownicy WHERE stanowisko = 'kierownik';
+
+SELECT  nazwisko, imie FROM studenci ORDER BY nazwisko DESC;
+ASC - oznacza ¿e rekordy maj¹ byæ sortowane rosn¹co
+DESC - oznacza ¿e rekordy maj¹ byæ sortowane malej¹co
+
+SELECT Tytu³, Count(Tytu³)AS Iloœæ FROM Pracownicy WHERE Miejsce_Ur = 'Rzeszów' GROUP BY Tytu³;
+
+SELECT Count(*) AS [Liczba zamówieñ] FROM Zamowienia;
+[zlicza rekordy w tabeli 'Zamowienia' i wypisuje wynik w nowej kolumnie 'Liczba zamówieñ']
+
+SELECT * FROM studenci WHERE DataObrony BETWEEN #02-04-98# AND #09-09-98#;
+
+DELETE FROM Studenci WHERE Data_Obrony < #01-01-1997#;
+[kasuje rekordy studentów, którzy bronili pracê przed rokiem 1997, znak # jest konieczny w Ms Access]
+
+SELECT nazwisko FROM studenci WHERE nr_telefonu IS NULL;
+[pokazuje nazwiska studentów bez podanego numeru telefonu]
+
+
+Inne funkcje
+Current_Date
+Current_Time
+Current_Timestamp
+Session_User
+System_User
+Current_User

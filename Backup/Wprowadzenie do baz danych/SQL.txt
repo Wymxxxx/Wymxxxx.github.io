@@ -1,0 +1,63 @@
+Zaleca siê wykonanie tego zadania po wyk³adzie dotycz¹cym instrukcji funkcjonalnych jêzyka SQL oraz po przerobieniu e-lekcji wchodz¹cych w sk³ad tego modu³u.
+Uruchom MS ACCESS i napisz funkcjê, w której umieœæ instrukcje CREATE TABLE tworz¹ce bazê danych odpowiadaj¹c¹ projektowi logicznemu zamieszczonemu na poni¿szym rysunku. WeŸ pod uwagê nastêpuj¹ce informacje:
+KP oznacza klucz podstawowy, KO klucz obcy
+auto to pole autonumerowane, Tak/Nie to pole logiczne, pozost³e typy pól dobierz odpowiednio na podstawie ich nazw
+Nastêpnie w funkcji umieœæ instrukcje, które wprowadz¹ do bazy danych nastêpuj¹ce dane:
+dwóch pracowników - jednego o nazwisku Kowalski, drugiego Nowak, numery PESEL wpisz dowolne
+dwa wyk³ady - jeden z Informatyki, drugi z Matematyki, liczbê godzin wpisz dowoln¹
+fakt, ¿e Kowalski jest wyk³adowc¹, datê zatrudnienia i stawkê godzinow¹ wpisz dowolne
+Poni¿ej umieœæ instrukcjê zmieniaj¹c¹ liczbê godzin wszystkich wyk³adów o nazwie Matematyka na 30
+
+
+
+
+
+
+
+Sub abc()
+ut = "CREATE TABLE wyklady (id_wykladu counter primary key, nazwa_wykladu varchar(30) not null, liczba_godzin long)"
+DoCmd.RunSQL ut
+
+
+ut = "CREATE TABLE pracownicy (id_pracownika counter primary key, nazwisko varchar(35) not null, PESEL varchar(11) not null )"
+DoCmd.RunSQL ut
+
+
+ut = "CREATE TABLE wykladowcy (id_wykladowcy integer not null, data_zatrudnienia date," & _
+"stawka_godzinowa real," & _
+"CONSTRAINT kpwy primary key(id_wykladowcy), CONSTRAINT rwp FOREIGN KEY(id_wykladowcy) references pracownicy(id_pracownika))"
+DoCmd.RunSQL ut
+
+
+ut = "CREATE TABLE wykladowcy_wyklady (id_wykladowcy integer not null, id_wykladu integer not null, obowiazkowy bit," & _
+"CONSTRAINT kpww primary key(id_wykladowcy,id_wykladu)," & _
+"CONSTRAINT rwww1 foreign key(id_wykladowcy) references wykladowcy(id_wykladowcy)," & _
+"CONSTRAINT rwww2 foreign key(id_wykladu) references wyklady(id_wykladu))"
+DoCmd.RunSQL ut
+End Sub
+
+
+
+
+Sub xyz()
+p = "INSERT INTO pracownicy (nazwisko, PESEL) VALUES ('Kowalski', 83031105832)"
+DoCmd.RunSQL p
+
+
+p = "INSERT INTO pracownicy (nazwisko, PESEL) VALUES ('Nowak', 68052312345)"
+DoCmd.RunSQL p
+
+
+w = "INSERT INTO wyklady (nazwa_wykladu, liczba_godzin) VALUES ('Matematyka', '30')"
+DoCmd.RunSQL w
+
+
+w = "INSERT INTO wyklady (nazwa_wykladu, liczba_godzin) VALUES ('Informatyka', 15)"
+DoCmd.RunSQL w
+
+
+ww = "INSERT INTO wykladowcy(id_wykladowcy, data_zatrudnienia, stawka_godzinowa) VALUES ('1', '2010-03-11', 9)"
+DoCmd.RunSQL ww
+
+u = "UPDATE wyklady SET liczba_godzin='30' WHERE nazwa_wykladu='Matematyka'"
+DoCmd.RunSQL u

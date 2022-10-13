@@ -1,0 +1,191 @@
+Napisz zapytanie zwracaj¹ce identyfikatory studentów oraz daty ich przyst¹pienia do egzaminu. Jeœli student danego dnia przyst¹pi³ do wielu egzaminów, jego identyfikator ma siê pojawiæ tylko raz. Dane posortowane malej¹co wzglêdem dat.
+
+
+SELECT DISTINCT studenci.id_studenta, oceny_studentow.data_egzaminu
+FROM (studenci INNER JOIN studenci_wyklady ON studenci.id_studenta = studenci_wyklady.id_studenta) INNER JOIN oceny_studentow ON studenci_wyklady.id_studenta = oceny_studentow.id_studenta
+ORDER BY oceny_studentow.data_egzaminu DESC
+
+# SELECT DISTINCT id_studenta, data_egzaminu 
+# FROM oceny_studentow 
+# ORDER BY data_egzaminu DESC
+----------------------
+
+Zapytanie zwracaj¹ce identyfikatory studentów, którzy przyst¹pili do egzaminu w marcu 2011. Identyfikator ka¿dego studenta ma siê pojawiæ tylko raz. Dane posortowane malej¹co wed³ug identyfikatorów studentów:
+
+SELECT DISTINCT id_studenta
+FROM oceny_studentow
+WHERE data_egzaminu LIKE '2011-03%'
+ORDER BY id_studenta DESC
+
+-----------------------
+
+Zapytanie zwracaj¹ce nazwiska, imiona, daty urodzenia i numery grup studentów nie nale¿¹cych do grupy, która w numerze grupy ma liczbê 1011, posortowane rosn¹co wed³ug nazwiska i imienia:
+
+SELECT nazwisko, imie, data_urodzenia, nr_grupy 
+FROM studenci 
+WHERE nr_grupy NOT LIKE '%1011%' 
+ORDER BY nazwisko, imie
+
+
+-----------------------
+
+Podaj wszystkie dane pracowników, u których pole NIP lub PESEL jest puste. Posortuj wyniki najpierw wed³ug nazwisk rosn¹co, potem wed³ug imion malej¹co.
+
+SELECT id_pracownika, imie, nazwisko, NIP, PESEL FROM pracownicy WHERE (NIP IS NULL) OR (PESEL IS NULL) ORDER BY nazwisko ASC, imie DESC
+
+---------------------------
+
+
+Zapytanie zwracaj¹ce nazwiska, imiona i identyfikatory studentów, którzy przyst¹pili do egzaminu co najmniej raz oraz daty egzaminów. Jeœli student danego dnia przyst¹pi³ do wielu egzaminów, jego dane maj¹ siê pojawiæ tylko raz. Dane posortowane rosn¹co wzglêdem dat:
+
+SELECT DISTINCT nazwisko, imie, id_studenta, data_egzaminu
+FROM studenci INNER JOIN oceny_studentow USING(id_studenta) 
+ORDER BY data_egzaminu
+
+
+------------------------
+
+
+
+Zapytanie zwracaj¹ce nazwiska, imiona i stopnie/tytu³y naukowe pracowników Katedry Informatyki. Dane posortowane rosn¹co wed³ug nazwisk i imion:
+
+SELECT nazwisko, imie, stopien_tytul
+FROM pracownicy INNER JOIN wykladowcy
+ON pracownicy.id_pracownika=wykladowcy.id_wykladowcy
+WHERE katedra='Katedra Informatyki'
+ORDER BY nazwisko, imie
+
+
+--------------------------
+
+Zapytanie zwracaj¹ce nazwiska i imiona wszystkich pracowników, a dla tych, którzy s¹ pracownikami naukowymi tak¿e nazwy katedr. Dane posortowane rosn¹co wed³ug nazwisk oraz malej¹co wed³ug imion:
+
+SELECT nazwisko, imie, katedra 
+FROM pracownicy LEFT JOIN wykladowcy 
+ON pracownicy.id_pracownika=wykladowcy.id_wykladowcy 
+ORDER BY nazwisko, imie DESC
+
+
+--------------------------
+
+Podaj zapytanie, które w wynikach da imiê, nazwisko, id wykladowcy i jego stopieñ dla wyk³adowców którzy nie prowadz¹ ¿adnych wyk³adów, sortuj wed³ug stopnia.
+
+
+SELECT imie, nazwisko, id_wykladowcy, stopien_tytul
+FROM (pracownicy RIGHT JOIN wykladowcy ON pracownicy.id_pracownika=wykladowcy.id_wykladowcy) LEFT JOIN wyklady USING (id_wykladowcy)
+WHERE id_wykladu IS NULL
+ORDER BY stopien_tytul
+
+
+---------------------------
+
+
+Zapytanie zwracaj¹ce identyfikatory, imiona, nazwiska i numery grup studentów, którzy nie s¹ zapisani na ¿aden wyk³ad. Dane posortowane malej¹co wed³ug nazwisk i imion:
+
+SELECT id_studenta, imie, nazwisko, nr_grupy
+FROM studenci
+WHERE id_studenta NOT IN (SELECT id_studenta FROM studenci_wyklady)
+ORDER BY nazwisko DESC, imie DESC
+
+-------------------------
+
+
+Zapytanie zwracaj¹ce identyfikatory i nazwiska studentów, którzy zapisali siê na wyk³ad ale nie otrzymali jeszcze z niego ¿adnej oceny. Zapytanie ma zwracaæ tak¿e nazwy wyk³adów. Dane posortowane rosn¹co wed³ug nazwisk i imion studentów:
+
+SELECT id_studenta, nazwisko, nazwa_wykladu 
+FROM (studenci INNER JOIN studenci_wyklady USING (id_studenta))
+INNER JOIN wyklady USING (id_wykladu)
+WHERE id_studenta NOT IN (SELECT id_studenta FROM oceny_studentow)
+ORDER BY nazwisko, imie
+
+
+-------------------------
+
+
+Zapytanie zwracaj¹ce nazwiska i imiona studentów wraz z numerami grup, zapisanych do grup o nazwach zaczynaj¹cych siê na DMIe oraz nazwiska i imiona wszystkich wyk³adowców wraz z nazwami katedr, w których pracuj¹. Ostatnia kolumna ma mieæ nazwê Grupa_Katedra. Dane posortowane rosn¹co wed³ug ostatniej kolumny:
+
+SELECT nazwisko,imie,nr_grupy AS Grupa_Katedra
+FROM studenci
+WHERE nr_grupy LIKE 'DMIe%'
+UNION
+SELECT nazwisko,imie,katedra
+FROM pracownicy INNER JOIN wykladowcy
+ON id_pracownika=id_wykladowcy
+ORDER BY grupa_katedra
+
+
+
+--------------------------
+
+Zapytanie zwracaj¹ce identyfikatory studentów, którzy zapisali siê zarówno na wyk³ad o identyfikatorze 5 jak i 13:
+
+SELECT id_studenta
+FROM studenci_wyklady AS sw1
+INNER JOIN studenci_wyklady AS sw2 USING(id_studenta)
+WHERE sw1.id_wykladu=5 AND sw2.id_wykladu=13
+
+
+-------------------------
+
+
+Zapytanie zwracaj¹ce liczbê wyk³adów, które gdziekolwiek w nazwie maj¹ ma³¹ literê m. Kolumna ma mieæ nazwê NaLitereM:
+
+SELECT COUNT(id_wykladu) AS NaLitereM
+FROM wyklady
+WHERE nazwa_wykladu LIKE '%m%'
+
+------------------------
+
+Zapytanie zwracaj¹ce nazwiska i imiona studentów o nazwisku Nowakowski, którzy otrzymali przynajmniej jedn¹ ocenê wraz ze œredni¹ ocen (ka¿dego Nowakowskiego z osobna). Kolumna zwracaj¹ca œredni¹ ma mieæ nazwê Srednia. Dane posortowane malej¹co wed³ug nazwisk i malej¹co wed³ug imion:
+
+SELECT nazwisko, imie, AVG(ocena) AS Srednia
+FROM studenci INNER JOIN oceny_studentow USING (id_studenta)
+WHERE nazwisko='Nowakowski'
+GROUP BY id_studenta, nazwisko, imie
+ORDER BY nazwisko DESC, imie DESC
+
+
+-----------------------
+
+
+Zapytanie zwracaj¹ce identyfikatory, nazwiska i imiona studentów zapisanych tylko na jeden wyk³ad. Dane posortowane rosn¹co wed³ug identyfikatorów studentów:
+
+SELECT id_studenta, nazwisko, imie
+FROM studenci INNER JOIN studenci_wyklady USING(id_studenta) 
+GROUP BY id_studenta, nazwisko, imie 
+HAVING COUNT(id_studenta)=1 
+ORDER BY id_studenta
+
+
+----------------------
+
+Zapytanie zwracaj¹ce wszystkie mo¿liwe oceny oraz ile razy ka¿da z ocen zosta³a przyznana (kolumna ma mieæ nazwê Liczba_ocen). Dane posortowane malej¹co wed³ug ocen:
+
+SELECT ocena, COUNT(ocena) AS Liczba_ocen 
+FROM oceny LEFT JOIN oceny_studentow USING(ocena) 
+GROUP BY ocena
+ORDER BY ocena DESC
+
+
+---------------------
+
+Zapytanie zwracaj¹ce nazwiska i imiona wyk³adowców, którzy prowadz¹ co najmniej jeden wyk³ad wraz ze œredni¹ ocen jakie dali studentom (jeœli wyk³adowca nie da³ do tej pory ¿adnej oceny, tak¿e ma siê pojawiæ na liœcie). Kolumna zwracaj¹ca œredni¹ ma mieæ nazwê Srednia. Dane posortowane malej¹co wed³ug œredniej:
+
+SELECT nazwisko, imie, AVG(ocena) AS srednia 
+FROM ((pracownicy INNER JOIN wykladowcy 
+ON pracownicy.id_pracownika=wykladowcy.id_wykladowcy) 
+INNER JOIN wyklady USING(id_wykladowcy)) 
+LEFT JOIN oceny_studentow USING(id_wykladu) 
+GROUP BY wykladowcy.id_wykladowcy, nazwisko, imie 
+ORDER BY srednia DESC
+
+----------------------
+
+Zapytanie zwracaj¹ce nazwy wyk³adów oraz kwotê, jak¹ uczelnia musi przygotowaæ na wyp³aty pracownikom prowadz¹cym wyk³ady ze Statystyki i Informatyki (osobno). Jeœli jest wiele wyk³adów ze Statystyki lub Informatyki, suma dla nich ma byæ obliczona ³¹cznie. Zapytanie ma wiêc zwróciæ dwa rekordy (jeden dla wyk³adów ze Statystyki, drugi dla Informatyki).
+Kwotê za jeden wyk³ad nale¿y obliczyæ jako iloczyn stawki godzinowej danego pracownika oraz liczby godzin przeznaczonych na prowadzone przez niego wyk³ady:
+
+SELECT nazwa_wykladu, SUM(stawka*liczba_godzin) AS Wyplata
+FROM (stopnie_tytuly INNER JOIN wykladowcy USING (stopien_tytul))
+INNER JOIN wyklady USING (id_wykladowcy) 
+WHERE nazwa_wykladu in ('Statystyka','Informatyka')
+GROUP BY nazwa_wykladu

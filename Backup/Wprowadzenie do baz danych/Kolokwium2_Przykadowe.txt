@@ -1,0 +1,46 @@
+a) 
+Napisz  zapytanie  zwracaj¹ce  nazwiska,  imiona  i  PESELe wszystkich  wyk³adowców  wraz  z 
+nazwami  i  identyfikatorami  prowadzonych  przez  nich wyk³adów.  Wyk³adowcy  prowadz¹cy 
+wyk³ady  musz¹  siê  pojawiæ  tyle  razy,  ile  wyk³adów  prowadz¹.  Jeœli  wyk³adowca  nie 
+prowadzi ¿adnego  wyk³adu,  tak¿e  ma  siê  pojawiæ  w  tabeli  wynikowej  zapytania.  Pole 
+zwracaj¹ce  nazwisko  ma  mieæ  nazwê  nazwisko_wykladowcy.  Dane  posortowane  malej¹co 
+wed³ug nazwiska. 
+Poprawnie napisane zapytanie zwraca nastêpuj¹ce dane: 
+39 wierszy i 5 kolumn 
+nazwisko w 10 wierszu: Michalska 
+nazwê wyk³adu w trzecim wierszu: Statystyka 
+id wyk³adu w ostatnim wierszu: 4 
+imiê w czwartym wierszu od koñca: Iwona 
+b) 
+Napisz  zapytanie  zwracaj¹ce  nazwiska  i  daty  urodzenia studentów  z  grupy,  której  nazwa 
+zaczyna  siê  od  DMIe  wraz  ze œredni¹  ocen  ka¿dego  z  nich.  W  tabeli  wynikowej  zapytania 
+maj¹ siê pojawiæ jedynie studenci, których œrednia ocen jest mniejsza od 3.5, w tym tak¿e ci, 
+którym  nie  zosta³a  do  tej  pory  przyznana ¿adna  ocena.  Pole  zawieraj¹ce  wynik  dzia³ania 
+funkcji  agreguj¹cej  nazwij  srednia_ocen.  Dane  posortowane  malej¹co  wed³ug œredniej  a 
+nastêpnie rosn¹co wed³ug nazwiska 
+Poprawnie napisane zapytanie zwraca nastêpuj¹ce dane: 
+10 wierszy i 3 kolumny 
+nazwisko w 3 wierszu: Luty 
+data urodzenia w przedostatnim wierszu: 1986-11-23 
+œrednia ocen w ostatnim wierszu: 2.5 
+œrednia ocen w trzecim wierszu od koñca: 3 
+œrednia ocen w pierwszych czterech wierszach: Null 
+
+
+
+
+
+
+2a) 
+ select nazwisko AS nazwisko_wykladowcy ,imie ,PESEL, nazwa_wykladu, id_wykladu
+ from (pracownicy inner join wykladowcy on id_pracownika=id_wykladowc?y)left join wyklady using (id_wykladowcy)
+ order by nazwisko_wykladowcy desc
+
+ 2b)
+ select nazwisko, data_urodzenia, count (id_wykladu) AS liczba_wykladow, AVG(ocena) AS srednia_ocen
+ from (studenci left join studenci_wyklady using (id_studenta))
+ left join oceny_studentow using (id_studenta, id_wykladu)
+ where nr_grupy like 'DMIe%'
+ group by nazwisko, data_urodzenia, id_studenta
+ having AVG(ocena) < 3.5 or AVG(ocena) IS NULL
+ order by srednia_ocen DESC, nazwisko
