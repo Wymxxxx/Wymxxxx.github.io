@@ -1,0 +1,72 @@
+s	************************************
+	* Zadanie 2:Dane o wybranym wyk³adzie
+	*
+    * Na ekranie pojawia siê formularz zawieraj¹cy posortowan¹ listê wszystkich wyk³adów (co najmniej identyfikator i nazwa).
+    * U¿ytkownik wybiera wyk³ad.
+    * Na ekranie pojawiaj¹ siê dane o prowadz¹cym wyk³adowcy (nazwisko, imiê, NIP, PESEL, stopieñ/tytu³ naukowy, nazwa katedry) oraz liczba * studentów zapisanych na ten wyk³ad.
+	************************************
+	<!-- jarekzem@wp.pl-->
+http://ie.uek.krakow.pl/~s161522/PHP1.php
+
+<?
+include "pw.php";
+$con = pg_connect("dbname=s161522 user=s161522 password=$haslo");
+$lista_wykladow="select id_wykladu, nazwa_wykladu, liczba_godzin, id_wykladowcy from wyklady order by nazwa_wykladu";
+$r=pg_exec($con,$lista_wykladow);
+
+wyswietl_wyklady($r);
+
+function wyswietl_wyklady($r)
+{
+$liczba_wierszy=pg_num_rows($r);
+print"Wybierz wyklad, aby dowiedziec sie wiecej na jego temat<br><br>";
+print"<form method='post' action='wyklady.php'>";
+print"<select name='wyklad' size='5'>";
+
+for ($i=0; $i<$liczba_wierszy; $i++)
+{
+	$id_wykladu=pg_result($r,$i,0);
+	$nazwa_wykladu=pg_result($r,$i,1);
+	$liczba_godzin=pg_result($r,$i,2);
+	$id_wykladowcy=pg_result($r,$i,3);
+	
+	print("<option value='$id_wykladu'/>ID wykladu:$id_wykladu, Nazwa:$nazwa_wykladu, Liczba godzin:$liczba_godzin, ID wykladowcy:$id_wykladowcy");
+}
+print"</select><br><br>";
+print"<input type='submit' value='Pokaz wiecej informacji'/>";
+print"</form>";
+}
+?>
+
+
+<?
+include "pw.php";
+if ($_POST[wyklad] == '')
+{
+	print"Wybierz wyklad.";
+	print"<br><a href='http://ie.uek.krakow.pl/~s161522/PHP1.php'>Wroc</a>";
+}
+else
+{
+$con = pg_connect("dbname=s161522 user=s161522 password=$haslo");
+$s="select distinct nazwisko, imie, NIP, PESEL, stopien_tytul, katedra FROM (pracownicy inner join wykladowcy ON pracownicy.id_pracownika=wykladowcy.id_wykladowcy) inner join wyklady using(id_wykladowcy)where id_wykladu=$_POST[wyklad]";
+$zlicz="select count(id_studenta) from studenci_wyklady where id_wykladu=$_POST[wyklad]";
+$d=pg_exec($con,$zlicz);
+$r=pg_exec($con,$s);
+
+$nazwisko=pg_result($r, 0, 0);
+$imie=pg_result($r, 0, 1);
+$NIP=pg_result($r, 0, 2);
+$PESEL=pg_result($r, 0, 3);
+$st=pg_result($r, 0, 4);
+$katedra=pg_result($r, 0, 5);
+
+$ilosc_st=pg_result($d,0,0);
+
+print"<table border='1' cellpadding='4'>";
+print"<tr><td>Nazwisko</td><td>Imie</td><td>NIP</td><td>PESEL</td><td>Stopien/Tytul</td><td>Katedra</td><td>Ilosc zapisanych studentow</td></tr>";
+print"<tr><td>$nazwisko</td><td>$imie</td><td>$NIP</td><td>$PESEL</td><td>$st</td><td>$katedra</td><td>$ilosc_st</td></tr>";
+print"</table>";
+print"<br><a href='http://ie.uek.krakow.pl/~s161522/PHP1.php'>Wroc</a>";
+}
+?>

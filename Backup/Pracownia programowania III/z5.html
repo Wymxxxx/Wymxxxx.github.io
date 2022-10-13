@@ -1,0 +1,80 @@
+<!-- jarekzem@wp.pl-->
+ <html>
+	 <head>
+		 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+		<script type="text/javascript"language="javascript">
+		<!-- //
+			 function sprDaty(){	
+					wzor = /^[0-9]{4}-[0,1]{1}[0-9]{1}-[0-3]{1}[0-9]{1}$/;
+					rok = document.formularz.data.value.substring(0,4);
+					miesiac = document.formularz.data.value.substring(5,7);
+					dzien = document.formularz.data.value.substring(8,10) ;
+					
+					if (!document.formularz.data.value.match(wzor))
+					alert("Niepoprawny format daty!");
+					
+					if (dzien < 1)
+					alert("Dzień musi wynosić przynajmniej 1.");
+					
+					if (miesiac < 1 || miesiac > 12)
+					alert("Miesiąc nie jest z przedziału 1-12.");
+				
+				var mies30 = new Array(04,06,09,11);
+					for (i in mies30)
+					{
+						if (miesiac==mies30[i] && dzien>30)
+						alert("Miesiąc ten ma 30 dni! Popraw datę.");
+					}
+				var mies31 = new Array(01,03,05,07,08,10,12);	
+					for (j in mies31)
+					{
+						if (miesiac==mies31[j] && dzien>31)
+						alert("Miesiąc ten ma 31 dni! Popraw datę.");
+					}
+					
+					if (rok%4==0) // Sprawdzenie czy rok jest przestępny
+					{
+						if (miesiac == 02 && dzien > 29)
+						alert("Luty w roku przestępnym ma 29 dni. Popraw datę.");
+					}
+					else  // rok nie przestępny
+					{
+						if (miesiac == 02 && dzien > 28)
+						alert("Luty ma 28 dni. Popraw datę.");
+					}
+
+					porownanieDat(rok,miesiac,dzien)
+				 }
+				 function porownanieDat(wprowadzonyRok,wprowadzonyMiesiac,wprowadzonyDzien) // sprawdza czy wpisana data jest wczesniejsza od obecnej.
+				 {
+					var obecnaData = new Date();
+					var obecnyRok = obecnaData.getFullYear();
+					var obecnyMiesiac = obecnaData.getMonth()+1;
+					var obecnyDzien = obecnaData.getDate();
+					
+					if(wprowadzonyRok < obecnyRok)
+					alert("Wprowadzona data jest wcześniejsza od obecnej!");
+					else if(wprowadzonyRok == obecnyRok)
+							{
+								if(wprowadzonyMiesiac < obecnyMiesiac)
+								alert("Wprowadzona data jest wcześniejsza od obecnej!");
+								else if(wprowadzonyMiesiac == obecnyMiesiac)
+										{
+											if(wprowadzonyDzien < obecnyDzien)
+											alert("Wprowadzona data jest wcześniejsza od obecnej!");
+										}
+							}
+				 }
+				 // -->
+		 </script>
+	 </head>
+	 
+	 <body>
+	 <fieldset>
+	 <legend> Data - Formularz II (Jarosław Zembal KrDzIs2011Io)</legend><br>
+		<form name="formularz" method="post">
+			Wprowadź datę: (rrrr-mm-dd) <input type="text" name="data" size="10" maxlength="10" onBlur="sprDaty()"/><br>
+		</form>
+		</fieldset>
+	 </body>
+ </html>

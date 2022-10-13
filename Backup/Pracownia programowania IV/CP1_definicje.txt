@@ -1,0 +1,41 @@
+Fixed and Stored Computers
+
+input - process - output
+
+fixed = calculator, input output
+
+Pc -> memory address registor, Cpu, CU, ALU, Cache, ACC <-> MDR
+
+ALU - wykonuje operacje matematyczne
+CU - wysyła sygnał i kontroluje CPU
+Cache - trzyma często wykorzystywane instrukcje
+PC - trzyma następny adres instrukcji w pamięci
+MAR - trzyma adres gdzie informacja jest przenoszona lub zapamiętywana
+MDR - przetrzymywuje informacje przenoszone lub zapisane w pamięci
+ACC - trzyma rezultaty z kalkulacji
+
+PC -> MAR -> memory -> MDR -> cache -> CU / ALU -> ACC -> memory
+ogółem: PC -> MAR -> MDR -> ACC
+
+zmienna - miejsce w lokalizacji, komórka, która przetrzymywuje adres, te dane są 
+przechowywane kiedy program działa, aż do zakończenia programu [nazwa, wartość, rodzaj] 
+
+instrukcje sterujące - instrukcje kontroli przepływu, na przykład 'IF'. Są one do zmiany 
+przebiegu programu, dzięki nimi, można się cofać. Są wykonywane jeden raz.
+
+typ danych - rodzaj danych, informacja opisująca dane
+
+plik - uporządkowany zbiór wartości, ulokowany w pamięci masowej. [nazwa, format]
+
+tryb otwarcia pliku - sposób w jaki może manipulować dane zawarte w pliku.
+
+Programowanie strukturalne - jest techniką, w której można wykorzystać podprogramy (funkcje) 
+i polecenia sterujące (np. if-polecenia lub pętle) do uporządkowania przepływu kontroli programów, 
+zamiast robić to za pomocą z 'go to'.
+
+Programowanie modułowe - oznacza rozdzielenie programów na oddzielne jednostki funkcjonalne (moduły). 
+Każdy moduł wykonuje dobrze zdefiniowane zadanie, a moduły są wywoływane w razie potrzeby. Zazwyczaj 
+stan każdego modułu jest enkapsulowany i ma być zmieniany tylko przez funkcje z tego modułu.
+
+Obiektowy model dokumentu (DOM) jest reprezentacją danych obiektów, które składają się na strukturę 
+i zawartość dokument w sieci. DOM reprezentuje Dokument HTML lub XML w pamięci.

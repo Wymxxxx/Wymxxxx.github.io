@@ -1,0 +1,75 @@
+<!-- jarekzem@wp.pl-->
+ <html>
+	 <head>
+		 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+		<script type="text/javascript"language="javascript">
+		<!-- //
+			 function sprKoduPocztowego(){	
+					wzorKP = /^[0-9]{2}\-[0-9]{3}$/;
+					if (!document.formularz.kodPocztowy.value.match(wzorKP)) 
+					alert("Niepoprawnie wypełniony kod pocztowy! \nPoprawny format: 00-000");
+				 }
+			function sprEmail(){	
+					wzorEmail = /^[a-zA-Z0-9]+@([a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,4}$/;
+					if (!document.formularz.email.value.match(wzorEmail)) 
+					alert("Niepoprawnie wypełniony email!");
+				 }
+			function sprLC(){
+					var lc = document.formularz.liczbaCalkowita.value;
+					if(isNaN(lc))
+					alert("Wprowadzone wyrażenie nie jest liczbą całkowitą!");
+					if(lc > 20 || lc < 5) 
+					alert("Liczba całkowita nie mieści się przedziale <5-20>");
+				 }
+			function sprDzienTyg(){
+					var wybranyDzienTyg = document.formularz.dzienTygodnia.value;
+					var dzisiejszaData = new Date();
+					var dzisiejszyDzien = dzisiejszaData.getDay(); 
+					if(dzisiejszyDzien != wybranyDzienTyg)
+						confirm("Wybrany dzień tygodnia jest inny od dzisiejszego. \nCzy chcesz kontynuować mimo to?");
+					}
+			function sprWymagalnosci(){
+				if (document.formularz.kodPocztowy.value == "")
+					{alert("Podaj kod pocztowy!"); return false;}
+				else if (document.formularz.email.value == "")
+					{alert("Podaj email!"); return false;}
+				else if (document.formularz.liczbaCalkowita.value == "")
+					{alert("Podaj liczbę całkowitą!"); return false;}
+				else if (document.formularz.dzienTygodnia.value == "")
+					{alert("Wybierz dzień tygdodnia!"); return false;}
+				else if (document.formularz.zgodaNaPrzetwarzanie.checked == false)
+					{alert("Zaznacz zgodę na przetwarzanie danych osobowych!");
+					document.formularz.zgodaNaPrzetwarzanie.focus();
+					return false;}
+				else
+					{alert("Wszystkie pola zostały wypełnione.\nTeraz nastąpi ich przesłanie."); return true;}
+				}
+				 
+				 // -->
+		 </script>
+	 </head>
+	 
+	 <body>
+	 <fieldset>
+	 <legend> Formularz (Jarosław Zembal KrDzIs2011Io)</legend><br>
+		<form name="formularz" method="post" onsubmit="return sprWymagalnosci()">
+			Kod pocztowy:<input type="text" name="kodPocztowy" size="6" maxlength="6" value="" onBlur="sprKoduPocztowego()"/><br><br>
+			E-mail:<input type="text" name="email" size="20" maxlength="40" onBlur="sprEmail()"/><br><br>
+			Liczba całkowita: <input type="text" name="liczbaCalkowita" size="2" maxlength="2" onBlur="sprLC()"/><br><br>
+			Wybierz dzień tygodnia:<br>
+				<select name="dzienTygodnia" size="7" onBlur="sprDzienTyg()">
+				<option value="1" /> Poniedziałek
+				<option value="2" /> Wtorek
+				<option value="3" /> Środa
+				<option value="4" /> Czwartek
+				<option value="5" /> Piątek
+				<option value="6" /> Sobota
+				<option value="0" /> Niedziela
+				</select><br><br>
+			<input type="checkbox" name="zgodaNaPrzetwarzanie" id="zgoda"/>
+			<label for="zgoda">Wyrażam zgodę na przetwarzanie moich danych osobowych.</label><br><br>
+			<input type="submit" value="Prześlij"/>
+		</form>
+		</fieldset>
+	 </body>
+ </html>

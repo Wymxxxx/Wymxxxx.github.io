@@ -1,0 +1,54 @@
+<!-- jarekzem@wp.pl-->
+
+
+<form method="post" action="przetwarzaj.php" enctype="multipart/form-data">
+
+	Wprowadz nazwisko: <input type='text' name='nazwisko' size='10' /><br>
+
+<br>Wybierz plec:<br>
+	<label for="1"><input type='radio' name='plec' value="Mezczyzna" id="1">Mezczyzna <br> </label>
+	<label for="2"><input type='radio' name='plec' value="Kobieta" id="2">Kobieta <br> </label><br>
+
+<select name="dni" size="7">
+	<option value="Poniedzialek" />Poniedzialek
+	<option value="Wtorek" />Wtorek
+	<option value="Sroda" />Sroda
+	<option value="Czwartek" />Czwartek
+	<option value="Piatek" />Piatek
+	<option value="Sobota" />Sobota
+	<option value="Niedziela" />Niedziela
+	</select><br><br>
+
+<input type="file" name="plik" size="40">
+<br>
+<input type="submit" value="Przeslij"/>
+</form>
+
+
+
+<? 
+$f = fopen("dokumenty/a.xml","w");
+
+if (is_uploaded_file($_FILES[plik][tmp_name]))
+{
+$xnazwisko = "<nazwisko>".$_POST['nazwisko']."</nazwisko>\n";
+$xplec = "<plec>".$_POST['plec']."</plec>\n";
+$xdni = "<dzienTygodnia>".$_POST['dni']."</dzienTygodnia>\n";
+$xnazwaPliku = "<nazwaPliku>".$_FILES[plik][name] ."</nazwaPliku>";
+$xrozmiarPliku = "<rozmiarPliku>".$_FILES[plik][size] ."</rozmiarPliku>";
+$xtypPliku = "<typPliku>".$_FILES[plik][type] ."</typPliku>";
+
+fwrite($f, "<formularz>\n");
+fwrite($f, $xnazwisko);
+fwrite($f, $xplec);
+fwrite($f, $xdni);
+fwrite($f, $xnazwaPliku);
+fwrite($f, $xrozmiarPliku);
+fwrite($f, $xtypPliku);
+fwrite($f, "</formularz>");
+}
+else
+echo 'B³¹d przy przesy³aniu pliku!';
+
+fclose($f);
+?>

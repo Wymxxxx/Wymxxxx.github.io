@@ -1,0 +1,75 @@
+<html> <!-- jarekzem@wp.pl-->
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/> 
+</head>
+<body>
+
+<h1>Elementy formularza</h1>
+<a name="poczatek"/>
+<table border="1">
+	<tr>
+		<td colspan="4"><b>Tabliczka mnożenia</></td>
+	</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td align="center"><b>25</b></td>
+			<td align="center"><b>37</b></td>
+			<td align="center"><b>12</b></td>
+		</tr>
+			<tr>
+				<td><b>42</b></td>
+				<td>1050</td>
+				<td>1554</td>
+				<td>504</td>
+			</tr>
+				<tr>
+					<td><b>71</b></td>
+					<td>1775</td>
+					<td>2627</td>
+					<td>852</td>
+				</tr>
+</table>
+<br />
+
+<form action="xxx.html">
+<input type="checkbox" name="czekboks" id="napis" checked />
+<label for="napis">Zaznacz, jeśli uważasz, że wszystkie działania w powyższej tabelce są poprawne.</label>
+<br /><br />
+
+Wybierz dni tygodnia, w których najczęściej odwiedzasz nasza stronę:<br />
+<select name="selekt" size="3" multiple>
+<option value="pon" /> Poniedziałek
+<option value="wt" /> Wtorek
+<option value="sr" /> Środa
+<option value="czw" /> Czwartek
+<option value="pt" /> Piątek
+<option value="sb" /> Sobota
+<option value="nd" /> Niedziela
+</select>
+
+<br /><br />
+Serwer służącu do tłumaczenia adresu domenowego na adres IP to: <br />
+<input type="radio" name="wyb1" value="Firewall" id="wyb1_opc1"/> <label for="wyb1_opc1">Firewall</label>
+<input type="radio" name="wyb1" value="IMAP" id="wyb1_opc2"/> <label for="wyb1_opc2">IMAP</label>
+<input type="radio" name="wyb1" value="DNS" id="wyb1_opc3"/> <label for="wyb1_opc3">DNS</label>
+<br /><br />
+
+<input type="text" name="email" size="20" maxlength="40" /> Wpisz swój adres e-mail<br /><br />
+<input type="password" name="haslo" size="8" maxlength="8" /> Podaj hasło (maksymalnie 8 znaków).<br /><br />
+<textarea name="komentarz" rows="2" cols="40">W tym miejscu wpisz komentarz na temat naszej strony</textarea><br /><br />
+Dołącz plik zawierający Twoje CV <input type="file" size="20" name="plik"/><br /><br />
+
+<input type="submit" value="Prześlij"/>
+<input type="reset" value="Resetuj"/>
+
+<hr />
+<h1> Łącza </h1>
+<a href="mailto:s161522@wizard.uek.krakow.pl">Napisz do nas.</a><br />
+Ściągnij <a href="http://ie.uek.krakow.pl/~s161522/plik.rar">plik.</a><br />
+Kliknięcie na podkreślonej części tego zdania ma otworzyc w <a href="http://ie.uek.krakow.pl/~s161522/odnosniczek.html" target="_blank">nowym oknie przeglądarki</a><br />
+nową stronę, w której pojawi się odnośnik do tej strony.<br />
+Kliknięcie na <a href="#poczatek">podkreślonej części tego zdania</a> powinno przesunąć wyświetlanie na początek tabeli.
+</form>
+
+</body>
+</html>

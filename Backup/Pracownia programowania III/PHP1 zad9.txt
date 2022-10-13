@@ -1,0 +1,74 @@
+<!-- jarekzem@wp.pl-->
+
+PLIK 1 pw.php     uzupelnij tu swoje haslo ....
+
+<?
+$haslo="TUTAJ WPISZ SWOJE HASLO";
+?>
+
+
+
+PLIK 2 zmien tu dbname i user na swoje ;)
+
+<?
+include "pw.php";
+$con = pg_connect("dbname=s161522 user=s161522 password=$haslo");
+$wykladowcy="select id_wykladowcy, nazwisko from pracownicy inner join wykladowcy ON pracownicy.id_pracownika=wykladowcy.id_wykladowcy";
+$r=pg_exec($con,$wykladowcy);
+
+wyswietl_wykladowcow($r);
+
+function wyswietl_wykladowcow($r)
+{
+$liczba_wierszy=pg_num_rows($r);
+print"Uzupelnij, aby dodac wyklad:<br><br>";
+
+print"<form method='post' action='wyklady.php'>";
+
+print("Wpisz nazwe wykladu: <input type='text' name='nazwa_wykladu' size='30' maxlength='50' value='$_POST[nazwa_wykladu]'/><br>");
+print("Wpisz liczbe godzin: <input type='text' name='liczba_godzin' size='4' maxlength='4' value='$_POST[liczba_godzin]'/><br>");
+print"Wybierz wykladowce:";
+print"<select name='wykladowcy' size='5'>";
+
+for ($i=0; $i<$liczba_wierszy; $i++)
+{
+	
+	$id_wykladowcy=pg_result($r,$i,0);
+	$nazwisko=pg_result($r,$i,1);
+	
+	print("<option value='$id_wykladowcy'/>ID wykladowcy:$id_wykladowcy, Nazwisko:$nazwisko");
+}
+print"</select><br><br>";
+print"<input type='submit' value='Wyslij'/>";
+print"</form>";
+}
+?>
+
+
+PLIK 3: wyklady.php  tu tez zmien dbname, user na swoje
+
+
+<?
+include "pw.php";
+$con = pg_connect("dbname=s161522 user=s161522 password=$haslo");
+$dodaj_wyk="INSERT INTO wyklady (nazwa_wykladu, liczba_godzin, id_wykladowcy) VALUES ('$_POST[nazwa_wykladu]', '$_POST[liczba_godzin]', '$_POST[wykladowcy]')";
+$wykonaj=pg_exec($con,$dodaj_wyk);
+$wyk_info="select id_wykladu, nazwa_wykladu, liczba_godzin, id_wykladowcy from wyklady";
+$r=pg_exec($con,$wyk_info);
+
+wyswietl_info($r);
+
+function wyswietl_info($r)
+{
+$liczba_wierszy=pg_num_rows($r);
+print"Wprowadzone dane:<br><br>";
+	
+	$id_wykladu=pg_result($r,$liczba_wierszy-1,0);
+	$nazwa_wykladu=pg_result($r,$liczba_wierszy-1,1);
+	$liczba_godzin=pg_result($r,$liczba_wierszy-1,2);
+	$id_wykladowcy=pg_result($r,$liczba_wierszy-1,3);
+	
+print("<table border='2'><tr><td>ID wykladu</td><td>nazwa wykladu</td><td>liczba godzin</td><td>ID wykladowcy</td></tr><tr><td>$id_wykladu</td><td>$nazwa_wykladu</td><td>$liczba_godzin</td><td>$id_wykladowcy</td></tr></table>");
+
+}
+?>
