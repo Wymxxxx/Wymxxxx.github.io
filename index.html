@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Spiker v-1</title>
+        <style>
+            .subject-container {
+                display: flex;
+                justify-content: left;
+                margin-left: 100px;
+            }
+
+            .dropdown-icon {
+                width: 32px;
+                height: 32px;
+                margin-top: 5px;
+            }
+
+            h2 {
+                margin-top: 5px;
+            }
+
+            p {
+                margin-left: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Spiker V<sub>-1</sub></h1>
+        <div class="main">
+
+        </div>
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+        const createLinks = function (json_data) {
+            let class_ = 0;
+            Object.keys(json_data).forEach(key => {
+                $(".main").append(
+                    "<hr><div class='subject-container' onclick='toggle_dropdown(" + class_ + ")'><a><h2>" + key + "</h2></a><img class='dropdown-icon' src='/dropdown.png'></div><div class='" + class_ + "' style='display:none'></div>"
+                )
+                json_data[key].forEach(item => {
+                    $("." + class_).append("<a href='Backup/" + key + "/" + item + "'><p>" + item + "</p></a>")
+                })
+                class_++;
+            })
+        }
+
+        const toggle_dropdown = function(class_) {
+            console.log("Toggle" + class_);
+            if ($("." + class_).css("display") == "none") {
+                $("." + class_).css("display", "block")
+            } else {
+                $("." + class_).css("display", "none")
+            }
+        }
+
+        fetch("files_tree.json").then(
+            res => res.json()
+        ).then(json_data => createLinks(json_data));
+    </script>
+</html>
